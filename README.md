@@ -5,7 +5,7 @@ Laboratorinis projektas 3
 
 .TXT file DIRECTORY is set to "d:\students.txt"
 
-***student.txt contains:***
+***students.txt contains:***
 ```
 Surname Name HW1 HW2 HW3 HW4 HW5 Exam
 Surname1 Name1 8 9 10 6 10 7
