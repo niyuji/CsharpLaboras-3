@@ -70,7 +70,6 @@ namespace laboras3
                 homeWork.Add(double.Parse(value[4]));
                 homeWork.Add(double.Parse(value[5]));
                 homeWork.Add(double.Parse(value[6]));
-                //public Student(string name, string surName, double finalPtsAvg, double finalPtsMed, List<double> homeWork, double examRes)
                 studentList.Add(new Student(value[1], value[0], 0, 0, homeWork, double.Parse(value[7])));
                 calculateAvg(studentList, studentList.Count - 1);
                 calculateMed(studentList, studentList.Count - 1);
