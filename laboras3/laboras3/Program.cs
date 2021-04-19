@@ -13,7 +13,6 @@ namespace laboras3
         static void Main(string[] args)
         {
             List<Student> studentList = new List<Student>();
-
             do
             {
                 Console.WriteLine(
