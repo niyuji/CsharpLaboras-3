@@ -3,7 +3,7 @@ Laboratorinis projektas 3
 
 .NET Framework 4.6.1
 
-.TXT file DIRECTORY is set to "d:\students.txt"
+input data .TXT file DIRECTORY is set to ```"d:\students.txt"```
 
 ***students.txt contains:***
 ```
