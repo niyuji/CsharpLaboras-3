@@ -11,7 +11,6 @@ namespace laboras3
     {
         private string name, surName;
         private double finalPtsAvg, finalPtsMed;
-        //static List<Student> studentList = new List<Student>();
         private List<double> homeWork;
         private double examRes;
 
@@ -56,6 +55,31 @@ namespace laboras3
             studentList.Add(student);
         }
 
+        public static void addStudentFromFile(List<Student> studentList)
+        {
+            string line;
+            int howMany=0;
+            System.IO.StreamReader file = new System.IO.StreamReader(@"d:\students.txt");
+            file.ReadLine(); //ignoruojam pirma eilute
+            while ((line = file.ReadLine()) != null)
+            {
+                List<double> homeWork = new List<double>();
+                string[] value = line.Split(' ');
+                homeWork.Add(double.Parse(value[2]));
+                homeWork.Add(double.Parse(value[3]));
+                homeWork.Add(double.Parse(value[4]));
+                homeWork.Add(double.Parse(value[5]));
+                homeWork.Add(double.Parse(value[6]));
+                //public Student(string name, string surName, double finalPtsAvg, double finalPtsMed, List<double> homeWork, double examRes)
+                studentList.Add(new Student(value[1], value[0], 0, 0, homeWork, double.Parse(value[7])));
+                calculateAvg(studentList, studentList.Count - 1);
+                calculateMed(studentList, studentList.Count - 1);
+                howMany++;
+            }
+            file.Close();
+            Console.WriteLine("Successfully added " + howMany + " records");
+        }
+
         public static void addStudentGradesLimited(List<Student> studentList)
         {
             int studentId=-1, hwNum;
@@ -81,6 +105,7 @@ namespace laboras3
 
             calculateAvg(studentList, studentId);
             calculateMed(studentList, studentId);
+            printStudentListAvg(studentList);
         }
 
         public static void addStudentGradesUnlimited (List<Student> studentList)
@@ -108,6 +133,7 @@ namespace laboras3
 
             calculateAvg(studentList, studentId);
             calculateMed(studentList, studentId);
+            printStudentListAvg(studentList);
         }
 
         public static void generateRandomPoints(List<Student> studentList)
@@ -133,6 +159,7 @@ namespace laboras3
             Console.WriteLine("Random Exam result: " + studentList[studentId].examRes);
             calculateAvg(studentList, studentId);
             calculateMed(studentList, studentId);
+            printStudentListAvg(studentList);
         }
 
         public static void calculateAvg (List<Student> studentList, int studentId)
@@ -188,18 +215,25 @@ namespace laboras3
 
         public static void printStudentListAvg (List<Student> studentList)
         {
-            Console.WriteLine("Surname \t Name \t \t Final Points (Avg.)");
-            Console.WriteLine("----------------------------------------------------");
-            foreach (var student in studentList) Console.WriteLine(student.surName + " \t\t " + student.name + "\t\t\t\t" + student.finalPtsAvg);
+            Console.WriteLine("\nSurname        Name            Final Points (Avg.)");
+            Console.WriteLine("--------------------------------------------------");
+            foreach (var student in studentList) Console.WriteLine(String.Format("{0,-14} {1,-14} {2,20}", student.surName, student.name, student.finalPtsAvg));
         }
 
         public static void printStudentListMed(List<Student> studentList)
         {
-            Console.WriteLine("Surname \t Name \t \t Final Points (Med.)");
-            Console.WriteLine("----------------------------------------------------");
-            foreach (var student in studentList) Console.WriteLine(student.surName + " \t\t " + student.name + "\t\t\t\t" + student.finalPtsMed);
+            Console.WriteLine("\nSurname        Name            Final Points (Med.)");
+            Console.WriteLine("--------------------------------------------------");
+            foreach (var student in studentList) Console.WriteLine(String.Format("{0,-14} {1,-14} {2,20}", student.surName, student.name, student.finalPtsMed));
         }
 
+        public static void printStudentListAvgMed(List<Student> studentList)
+        {
+            Console.WriteLine("\nSurname        Name            Final Points (Avg.)  Final Points (Med.)");
+            Console.WriteLine("-----------------------------------------------------------------------");
+            foreach (var student in studentList)
+                Console.WriteLine(String.Format("{0,-14} {1,-14} {2,20} {3,20}", student.surName , student.name , student.finalPtsAvg , student.finalPtsMed));
+        }
     }
 
     class Program
@@ -211,16 +245,16 @@ namespace laboras3
 
             do
             {
-
-
                 Console.WriteLine(
-                    "[Input option from this list]\n" +
+                    "\n[Input option from this list]\n" +
                     "0. Terminate program\n" +
                     "1. Add student by hand\n" +
-                    "2. Add student's grades by hand\n" +
-                    "3. Add student's automatically generated grades\n" +
-                    "4. Print student list with AVG points\n" +
-                    "5. Print student list with MED points");
+                    "2. Read students from file\n" +
+                    "3. Add student's grades by hand\n" +
+                    "4. Add student's automatically generated grades\n" +
+                    "5. Print student list with AVG points\n" +
+                    "6. Print student list with MED points\n" +
+                    "7. Print student list with AVG and MED points");
 
                 switch (Int32.Parse(Console.ReadLine()))
                 {
@@ -233,6 +267,10 @@ namespace laboras3
                         break;
 
                     case 2:
+                        Student.addStudentFromFile(studentList);
+                        break;
+
+                    case 3:
                         Console.WriteLine("[Input (1 or 2) option]\n" +
                             "0. Go back\n" +
                             "1. Student's number of HW is known\n" +
@@ -250,25 +288,22 @@ namespace laboras3
                         }
                         break;
 
-                    case 3:
+                    case 4:
                         Student.generateRandomPoints(studentList);
                         break;
 
-                    case 4:
+                    case 5:
                         Student.printStudentListAvg(studentList);
                         break;
 
-                    case 5:
+                    case 6:
                         Student.printStudentListMed(studentList);
                         break;
+
+                    case 7:
+                        Student.printStudentListAvgMed(studentList);
+                        break;
                 }
-                //Student.addStudent(studentList);
-                //Student.addStudentGradesUnlimited(studentList);
-                //Student.generateRandomPoints(studentList);
-                //Student.printStudentListAvg(studentList);
-                //Student.printStudentListMed(studentList);
-
-
             } while (true);
         }
     }
