@@ -268,6 +268,7 @@ namespace laboras3
                 //Student.printStudentListAvg(studentList);
                 //Student.printStudentListMed(studentList);
 
+
             } while (true);
         }
     }
