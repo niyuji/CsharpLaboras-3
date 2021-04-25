@@ -22,3 +22,10 @@ added menu option 8.
 
 students auto generated with auto generated grades.
 choose from 10 000 to 10 000 000 random generated students from context menu in no.8.
+
+
+FUNCTION EXECUTION TIME:
+1. Generate     10 000 students:     57 ms
+2. Generate    100 000 students:    426 ms
+3. Generate  1 000 000 students:   4106 ms
+4. Generate 10 000 000 students: 140664 ms
