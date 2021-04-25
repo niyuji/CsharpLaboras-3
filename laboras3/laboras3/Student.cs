@@ -297,6 +297,8 @@ namespace laboras3
         }
         public static void generateStudents(int numberOfStudents)
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            
             List<Student> generatedStudentList = new List<Student>();
             Random random = new Random();
             for (int i = 0; i < numberOfStudents; i++)
@@ -360,6 +362,8 @@ namespace laboras3
                         "] exam: " + item.examRes + " [ avg: " + item.finalPtsAvg + ", med: " + item.finalPtsMed + "]");
                 }
             }
+            watch.Stop();
+            Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
         }
 
         /**public static void irasymas<T>(List<T> isfiltruoti, bool didPass) // i faila
