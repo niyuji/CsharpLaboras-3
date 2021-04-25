@@ -29,3 +29,7 @@ FUNCTION EXECUTION TIME:
 2. Generate    100 000 students:    426 ms
 3. Generate  1 000 000 students:   4106 ms
 4. Generate 10 000 000 students: 140664 ms
+
+Generateed 10 000 000 students file sizes:
+Passed: 525MB
+Failed: 389MB
