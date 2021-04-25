@@ -205,14 +205,14 @@ namespace laboras3
             try
             {
                 studentList[studentId].homeWork.Clear(); //isvalom buvusius pazymius jei buvo
-                randomNumber = random.Next(1, 10); //random kiekis homeworku
+                randomNumber = random.Next(1, 11); //random kiekis homeworku
                 for (int i = 0; i < randomNumber; i++)
                 {
-                    randomNumber = random.Next(1, 10); // random pazymys
+                    randomNumber = random.Next(1, 11); // random pazymys 1-10
                     studentList[studentId].homeWork.Add(randomNumber);
                     Console.WriteLine("Random HW result: " + randomNumber);
                 }
-                studentList[studentId].examRes = random.Next(1, 10);
+                studentList[studentId].examRes = random.Next(1, 11);
                 Console.WriteLine("Random Exam result: " + studentList[studentId].examRes);
                 calculateAvg(studentList, studentId);
                 calculateMed(studentList, studentId);
@@ -295,5 +295,98 @@ namespace laboras3
             foreach (var student in studentList)
                 Console.WriteLine(String.Format("{0,-14} {1,-14} {2,20} {3,20}", student.surName, student.name, student.finalPtsAvg, student.finalPtsMed));
         }
+        public static void generateStudents(int numberOfStudents)
+        {
+            List<Student> generatedStudentList = new List<Student>();
+            Random random = new Random();
+            for (int i = 0; i < numberOfStudents; i++)
+                {
+                    string name = "Name" + i.ToString();
+                    string surName = "Surname" + i.ToString();
+                    List<double> hwGrades = new List<double>();
+                    double examRes;
+                    for (int j =0; j<5; j++)
+                    {
+                        hwGrades.Add(random.Next(1, 11));
+                    }
+                    examRes = random.Next(1, 11);
+
+                    generatedStudentList.Add(new Student(name, surName, 0, 0, hwGrades, examRes));
+                    calculateAvg(generatedStudentList, i);
+                    calculateMed(generatedStudentList, i);
+                    //Console.WriteLine("no: " + i);
+                    Console.WriteLine(i + " " + name + " " + surName + 
+                        " [" + hwGrades[0] + " " + hwGrades[1] + " " + hwGrades[2] + " " + hwGrades[3] + " " + hwGrades[4] + 
+                        "] " + examRes);
+                    //printStudentListAvgMed(generatedStudentList);
+                }
+            //printStudentListAvgMed(generatedStudentList);
+
+            List<Student> generatedStudentListPassed = new List<Student>();
+            List<Student> generatedStudentListFailed = new List<Student>();
+            foreach (var student in generatedStudentList)
+            {
+                if (student.finalPtsAvg >= 5.0d)
+                {
+                    generatedStudentListPassed.Add(student);
+                }
+                else
+                {
+                    generatedStudentListFailed.Add(student);
+                }
+            }
+            //Student.irasymas(generatedStudentListPassed,true);
+            //Student.irasymas(generatedStudentListFailed,false);
+            String passPath = @"d:\students_passed.txt";
+            String failedPath = @"d:\students_failed.txt";
+
+            using (var irasymas = new StreamWriter(passPath))
+            {
+                foreach(var item in generatedStudentListPassed)
+                {
+                    //irasymas.WriteLine(string.Join(",", properties.Select(p => p.GetValue(item, null))));
+                    irasymas.WriteLine("name: " + item.name + " surname: " + item.surName + 
+                        " homework: [" + item.homeWork[0] + " " + item.homeWork[1] + " " + item.homeWork[2] + " " + item.homeWork[3] + " " + item.homeWork[4] + 
+                        "] exam: " + item.examRes + " [ avg: " + item.finalPtsAvg + ", med: " + item.finalPtsMed + "]");
+                }
+            }
+            using (var irasymas = new StreamWriter(failedPath))
+            {
+                foreach(var item in generatedStudentListFailed)
+                {
+                    //irasymas.WriteLine(string.Join(",", properties.Select(p => p.GetValue(item, null))));
+                    irasymas.WriteLine("name: " + item.name + " surname: " + item.surName + 
+                        " homework: [" + item.homeWork[0] + " " + item.homeWork[1] + " " + item.homeWork[2] + " " + item.homeWork[3] + " " + item.homeWork[4] + 
+                        "] exam: " + item.examRes + " [ avg: " + item.finalPtsAvg + ", med: " + item.finalPtsMed + "]");
+                }
+            }
+        }
+
+        /**public static void irasymas<T>(List<T> isfiltruoti, bool didPass) // i faila
+        {
+            String kelias = @"d:\students_passed.txt";
+            if (didPass==true) kelias = @"d:\students_passed.txt";
+            if (didPass==false) kelias = @"d:\students_failed.txt";
+            
+            if ((!File.Exists(kelias)))
+            {
+                FileStream fs = File.Create(kelias);
+                fs.Close();
+            }
+
+            Type itemType = typeof(T);
+            var properties = itemType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            using (var irasymas = new StreamWriter(kelias))
+            {
+                //surasytu "Vardas,Pavarde,Pareigos,Profesine_patirtis,Pageidaujamas_atlygis" i pirma eilute
+                //irasymas.WriteLine(string.Join(",", props.Select(p => p.Name)));
+                foreach(var item in isfiltruoti)
+                {
+                    irasymas.WriteLine(string.Join(",", properties.Select(p => p.GetValue(item, null))));
+                    //irasymas.WriteLine(string.Format("Item: {0} - Cost: {1}", , item.Cost.ToString()));
+                }
+            }
+        }**/
     }
 }

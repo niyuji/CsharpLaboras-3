@@ -18,13 +18,18 @@ namespace laboras3
                 Console.WriteLine(
                     "\n[Input option from this list]\n" +
                     "0. Terminate program\n" +
+                    "--------------------------------------------------\n" +
                     "1. Add student by hand\n" +
                     "2. Read students from file\n" +
+                    "--------------------------------------------------\n" +
                     "3. Add student's grades by hand\n" +
                     "4. Add student's automatically generated grades\n" +
+                    "--------------------------------------------------\n" +
                     "5. Print student list with AVG points\n" +
                     "6. Print student list with MED points\n" +
-                    "7. Print student list with AVG and MED points");
+                    "7. Print student list with AVG and MED points\n" +
+                    "--------------------------------------------------\n" +
+                    "8. Generate & sort students");
                 try { 
                     switch (Int32.Parse(Console.ReadLine()))
                     {
@@ -72,6 +77,31 @@ namespace laboras3
 
                         case 7:
                             Student.printStudentListAvgMed(studentList);
+                            break;
+                        case 8:
+                            Console.WriteLine("[Input (1 or 4) option]\n" +
+                                "0. Go back\n" +
+                                "1. Generate     10 000 students\n" +
+                                "2. Generate    100 000 students\n" +
+                                "3. Generate  1 000 000 students\n" +
+                                "4. Generate 10 000 000 students");
+                            switch (Int32.Parse(Console.ReadLine()))
+                            {
+                                case 0:
+                                    break;
+                                case 1:
+                                    Student.generateStudents(10000);
+                                    break;
+                                case 2:
+                                    Student.generateStudents(100000);
+                                    break;
+                                case 3:
+                                    Student.generateStudents(1000000);
+                                    break;
+                                case 4:
+                                    Student.generateStudents(10000000);
+                                    break;
+                            }
                             break;
                     }
                 }catch (System.FormatException)
